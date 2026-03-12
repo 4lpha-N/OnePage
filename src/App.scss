@@ -1,4 +1,7 @@
+@use './projects/variables.scss' as *;
+
 *:focus-visible {
-    outline: 3px solid var(--primary);
-    outline-offset: 3px;
+    outline: 3px solid var(--primary) !important;
+    outline-offset: 3px !important;
+    z-index: $zIndexUpper;
 }

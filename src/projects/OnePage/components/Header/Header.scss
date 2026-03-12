@@ -6,7 +6,7 @@
   left: $buttonSpacer + $pagePadding + ($buttonGap);
   width: calc(100vw - (#{$buttonSpacer} + #{$pagePadding}) * 2 - #{$buttonGap} * 2);
   height: $headerHeight;
-  z-index: 20;
+  z-index: $zIndexNav;
   background-color: color-mix(in srgb, var(--bg-lighter) 25%, transparent);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);

@@ -43,7 +43,7 @@
   overflow: auto;  // nur der Inhalt scrollt
   // text-align: center;
   // user-select: none;
-  z-index: 1;
+  z-index: $zIndexContent;
   position: relative;
   padding: $contentPadding;
   padding-top: $contentPadding + $headerHeight;
@@ -65,7 +65,7 @@
   position: fixed;
   inset: 0;
   pointer-events: none; // Klicks fallen durch, außer auf Buttons
-  z-index: 1;
+  z-index: $zIndexNav + 1;
 
   display: grid;
   grid-template-areas:
@@ -98,7 +98,6 @@
   &:hover {
     background-color: color-mix(in srgb, var(--bg-lighter) 45%, transparent);
     box-shadow: 0 2px 12px color-mix(in srgb, var(--bg-darker) 50%, transparent);
-    // transform: scale(1.12);
   }
 
   &:active {
@@ -121,12 +120,12 @@
     transition:
       filter     0.15s ease,
       outline    0.15s ease;
-    outline: 2px solid transparent;
+    outline: 2px solid color-mix(in srgb, var(--color) 10%, transparent);
     outline-offset: -2px;
 
     &:hover {
       filter: brightness(0.93) saturate(1.1);
-      outline-color: color-mix(in srgb, var(--bg-darker) 75%, transparent);
+      outline-color: color-mix(in srgb, var(--color) 70%, transparent);
     }
   }
 
