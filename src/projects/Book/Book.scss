@@ -1,0 +1,206 @@
+$hintergrund: #ece9e6;
+$buch-braun: #8B5C2A;
+$buch-braun-gradient: linear-gradient(135deg, #a67c52 60%, $buch-braun 100%);
+$papier-bg: #fdf6ee;
+$papier-struktur: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+$papier-rand: #e5d7c2;
+$papier-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 0 0 1.5px $papier-rand inset;
+$buch-shadow: 0 12px 36px rgba(0,0,0,0.18);
+$buch-radius: 16px 16px 24px 24px;
+$papier-radius: 8px 8px 18px 18px;
+$buch-max-width: 600px;
+$buch-max-height: 400px;
+$buch-min-width: 320px;
+$buch-min-height: 200px;
+$buch-width: 80vw;
+$buch-height: 60vh;
+$papier-width: calc(50% - 5px);
+$papier-height: calc(100% - 10px);
+$papier-font: 'Georgia', serif;
+$papier-color: #5a4632;
+
+.book-container {
+  // background-color: $hintergrund;
+  // min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.book {
+  width: $buch-width;
+  max-width: $buch-max-width;
+  height: $buch-height;
+  max-height: $buch-max-height;
+  min-width: $buch-min-width;
+  min-height: $buch-min-height;
+  background-color: $buch-braun-gradient;
+  color: var(--color);
+  border-radius: $buch-radius;
+  box-shadow: $buch-shadow;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: visible;
+}
+
+// Buch-Cover immer oben, im offenen Zustand ausgeblendet
+.book-cover {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+  background-color: $buch-braun-gradient;
+  border-radius: $buch-radius;
+  box-shadow: $buch-shadow;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  // transition: opacity 0.4s cubic-bezier(.77,0,.18,1), visibility 0.4s;
+  opacity: 1;
+  pointer-events: auto;
+}
+.book-cover.open {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+.cover-content {
+  color: #fff;
+  font-size: 2rem;
+  font-family: 'Georgia', serif;
+  letter-spacing: 0.05em;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+
+.book-page {
+  width: $papier-width;
+  height: $papier-height;
+  background-color: $papier-bg;
+  background-image:
+    repeating-linear-gradient(135deg, #f7f2e7 0px, #f7f2e7 2px, $papier-bg 4px, $papier-bg 12px),
+    $papier-struktur;
+  background-size: 180px 180px, 300px 300px;
+  background-blend-mode: multiply;
+  border-radius: $papier-radius;
+  box-shadow: $papier-shadow;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  font-size: 1.05rem;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.4s cubic-bezier(.77,0,.18,1), box-shadow 0.4s;
+  z-index: 2;
+  overflow: hidden;
+
+  &.left {
+    left: 5px;
+    border-right: 2px solid $papier-rand;
+    box-shadow: 6px 0 18px rgba(0,0,0,0.09);
+    transform: translateY(-50%);
+  }
+  &.right {
+    right: 5px;
+    border-left: 2px solid $papier-rand;
+    box-shadow: -6px 0 18px rgba(0,0,0,0.09);
+    transform: translateY(-50%);
+    margin-left: -12px;
+
+    &.solo {
+      left: auto !important;
+      right: 5px !important;
+      margin-left: 0 !important;
+    }
+  }
+  &.turning {
+    &.left {
+      transform: translateY(-50%) rotateY(-60deg) scale(0.96);
+      box-shadow: 8px 0 24px rgba(0,0,0,0.13);
+    }
+    &.right {
+      transform: translateY(-50%) rotateY(60deg) scale(0.96);
+      box-shadow: -8px 0 24px rgba(0,0,0,0.13);
+    }
+    // Fallback für allgemeines turning
+    transform: translate(-50%, -50%) rotateY(60deg) scale(0.96);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  }
+}
+
+.page-content {
+  padding: 16px 18px;
+  text-align: left;
+  color: $papier-color;
+  font-family: $papier-font;
+}
+
+.book-toggle {
+  margin-bottom: 32px;
+  padding: 10px 24px;
+  font-size: 1rem;
+  background-color: $buch-braun;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  &:hover {
+    background-color: #a06d3b;
+  }
+}
+
+.book-navigation {
+  margin-top: 24px;
+  display: flex;
+  gap: 8px;
+  button {
+    background-color: #fff;
+    border: 1px solid $buch-braun;
+    color: $buch-braun;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    &.active,
+    &:focus {
+      background-color: $buch-braun;
+      color: #fff;
+    }
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.closed .book {
+  box-shadow: none;
+  background-color: $buch-braun;
+  opacity: 0.7;
+  width: calc(#{$buch-width} / 2);
+  min-width: calc(#{$buch-min-width} / 2);
+  max-width: calc(#{$buch-max-width} / 2);
+  height: $buch-height;
+  min-height: $buch-min-height;
+  max-height: $buch-max-height;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closed .book-page.left {
+  display: none !important;
+}
+.closed .book-page.right {
+  left: 50% !important;
+  right: auto !important;
+  margin-left: 0 !important;
+  transform: translateX(-50%) translateY(-50%) !important;
+  display: flex !important;
+}

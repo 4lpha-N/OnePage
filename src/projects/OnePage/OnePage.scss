@@ -1,0 +1,148 @@
+@use '../variables.scss' as *;
+// ─────────────────────────────────────────────────────────────
+// OnePage – One-Page-Website Template
+// Raster: 3 × 3 Seiten, Seite 1 im Zentrum
+// ─────────────────────────────────────────────────────────────
+// ── Viewport-Wrapper ─────────────────────────────────────────
+.onepage-wrapper {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+// ── Vollständiges Seitenraster ───────────────────────────────
+.onepage-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 100vw);
+  grid-template-rows: repeat(3, 100vh);
+  width: 300vw;
+  height: 300vh;
+  // Ursprung oben links – benötigt für korrekte Overview-Skalierung
+  transform-origin: 0 0;
+  // Slide- & Zoom-Animation beim Seitenwechsel
+  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+// ── Einzelne Seite ───────────────────────────────────────────
+.onepage-page {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; // kein Overflow der Seite selbst
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// ── Seiteninhalt (Platzhalter) ───────────────────────────────
+.onepage-content {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: auto;  // nur der Inhalt scrollt
+  // text-align: center;
+  // user-select: none;
+  z-index: 1;
+  position: relative;
+  padding: $contentPadding;
+  padding-top: $contentPadding + $headerHeight;
+  
+  &.no-nav {
+    padding: $pagePadding;
+    padding-top: $contentPadding + 16px;
+  }
+
+  p {
+    font-size: 1rem;
+    margin: 0;
+  }
+}
+
+// ── Navigations-Overlay ──────────────────────────────────────
+// 3 × 3-Grid, Mitte bleibt leer – Buttons in den 8 Randzellen
+.onepage-nav {
+  position: fixed;
+  inset: 0;
+  pointer-events: none; // Klicks fallen durch, außer auf Buttons
+  z-index: 1;
+
+  display: grid;
+  grid-template-areas:
+    'tl tc tr'
+    'ml .  mr'
+    'bl bc br';
+  grid-template-columns: $buttonSpacer 1fr $buttonSpacer;
+  grid-template-rows:    $buttonSpacer 1fr $buttonSpacer;
+  padding: $pagePadding;
+  gap: 4px;
+}
+
+// ── Navigations-Button (gemeinsam) ───────────────────────────
+.onepage-nav-btn {
+  pointer-events: all;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--color);
+  font-size: 1.4rem;
+  line-height: 1;
+  background-color: color-mix(in srgb, var(--bg-lighter) 25%, transparent);
+  border: 1px solid color-mix(in srgb, var(--bg-darker) 75%, transparent);
+  border-radius: 10px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--bg-lighter) 45%, transparent);
+    box-shadow: 0 2px 12px color-mix(in srgb, var(--bg-darker) 50%, transparent);
+    // transform: scale(1.12);
+  }
+
+  &:active {
+    background-color: color-mix(in srgb, var(--bg-lighter) 65%, transparent);
+    // transform: scale(0.94);
+  }
+
+  min-width: 0;
+  min-height: 0;
+  // Standardgröße für alle Buttons
+  width: 100%;
+  height: 100%;
+}
+
+// ── Overview-Modus ───────────────────────────────
+.onepage-wrapper--overview {
+  // Seiten im Überblick anklickbar machen
+  .onepage-page {
+    cursor: pointer;
+    transition:
+      filter     0.15s ease,
+      outline    0.15s ease;
+    outline: 2px solid transparent;
+    outline-offset: -2px;
+
+    &:hover {
+      filter: brightness(0.93) saturate(1.1);
+      outline-color: color-mix(in srgb, var(--bg-darker) 75%, transparent);
+    }
+  }
+
+  // Navigations-Pfeile im Overview ausblenden
+  .onepage-nav,
+  .onepage-header {
+    display: none;
+  }
+}
+
+// ── Grid-Area-Zuweisung ───────────────────────────────────────
+.onepage-nav-btn--tl { grid-area: tl; }
+.onepage-nav-btn--tc { grid-area: tc; }
+.onepage-nav-btn--tr { grid-area: tr; }
+.onepage-nav-btn--ml { grid-area: ml; }
+.onepage-nav-btn--mr { grid-area: mr; }
+.onepage-nav-btn--bl { grid-area: bl; }
+.onepage-nav-btn--bc { grid-area: bc; }
+.onepage-nav-btn--br { grid-area: br; }

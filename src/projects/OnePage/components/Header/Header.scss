@@ -1,0 +1,44 @@
+@use '../../../variables.scss' as *;
+
+.onepage-header {
+  position: fixed;
+  top: $buttonSpacer + $pagePadding + ($buttonGap);
+  left: $buttonSpacer + $pagePadding + ($buttonGap);
+  width: calc(100vw - (#{$buttonSpacer} + #{$pagePadding}) * 2 - #{$buttonGap} * 2);
+  height: $headerHeight;
+  z-index: 20;
+  background-color: color-mix(in srgb, var(--bg-lighter) 25%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 2px 16px color-mix(in srgb, var(--bg-darker) 50%, transparent);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+
+  &.no-nav {
+    top: $pagePadding;
+    left: $pagePadding;
+    width: calc(100vw - (#{$pagePadding} * 2));
+  }
+}
+
+.onepage-header-inner {
+  width: 100vw;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+}
+
+.onepage-header-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.onepage-header-actions {
+  display: flex;
+  gap: 12px;
+}

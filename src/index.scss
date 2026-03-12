@@ -1,0 +1,95 @@
+@use "sass:color";
+
+// Farbpalette als SCSS-Variablen
+$bg-dark: #222;
+$bg-light: #ece9e6;
+$bg-dark-light: color.adjust($bg-dark, $lightness: 10%);
+$bg-dark-dark: color.adjust($bg-dark, $lightness: -10%);
+$bg-light-light: color.adjust($bg-light, $lightness: 10%);
+$bg-light-dark: color.adjust($bg-light, $lightness: -10%);
+$color-dark: #222;
+$color-light: #ccc;
+$primary: crimson;
+$primary-hover: color.adjust($primary, $lightness: -10%);
+$primary-active: color.adjust($primary, $lightness: -20%);
+$primary-focus: color.adjust($primary, $lightness: 10%);
+$primary-disabled: color.mix($primary, $bg-light, 60%);
+$primary-contrast: #fff;
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  --bg-dark: #{$bg-dark};
+  --bg-dark-light: #{$bg-dark-light};
+  --bg-dark-dark: #{$bg-dark-dark};
+	--bg-light: #{$bg-light};
+  --bg-light-light: #{$bg-light-light};
+  --bg-light-dark: #{$bg-light-dark};
+	--color-dark: #{$color-dark};
+	--color-light: #{$color-light};
+	--primary: #{$primary};
+	--primary-hover: #{$primary-hover};
+	--primary-active: #{$primary-active};
+	--primary-focus: #{$primary-focus};
+	--primary-disabled: #{$primary-disabled};
+	--primary-contrast: #{$primary-contrast};
+
+  --bg: var(--bg-light);
+  --bg-lighter: var(--bg-light-light);
+  --bg-darker: var(--bg-light-dark);
+  --color: var(--color-dark);
+
+  color-scheme: light dark;
+  color: var(--color);
+  background-color: var(--bg);
+  overflow: hidden;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    // outline-color 0.3s ease,
+    opacity 0.3s ease;
+}
+
+body:not(.mounted) {
+  * {
+    transition: none !important;
+  }
+}
+
+// Theme light
+[data-theme="light"] {
+	--bg: var(--bg-light);
+  --bg-lighter: var(--bg-light-light);
+  --bg-darker: var(--bg-light-dark);
+	--color: var(--color-dark);
+}
+
+// Theme dark
+[data-theme="dark"] {
+	--bg: var(--bg-dark);
+  --bg-lighter: var(--bg-dark-light);
+  --bg-darker: var(--bg-dark-dark);
+	--color: var(--color-light);
+}
+
+// Automatisches Dark Theme via OS
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme="light"]) {
+		--bg: var(--bg-dark);
+    --bg-lighter: var(--bg-dark-light);
+    --bg-darker: var(--bg-dark-dark);
+		--color: var(--color-light);
+	}
+}
