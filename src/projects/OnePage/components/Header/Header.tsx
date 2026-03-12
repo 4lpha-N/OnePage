@@ -4,7 +4,6 @@ import { MdControlCamera } from "react-icons/md";
 import { HiOutlineArrowsExpand } from "react-icons/hi";
 import { CgDarkMode } from "react-icons/cg";
 import Button from '@mui/material/Button';
-import { Grid } from '@mui/material';
 
 interface HeaderProps {
   classes: string;
