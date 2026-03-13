@@ -111,7 +111,7 @@ export default function OnePage() {
     palette: {
       mode: theme,
       primary: { main: '#b71c1c' },
-      secondary: { main: '#b71c1c' },
+      secondary: { main: theme === 'light' ? '#222' : '#ccc' },
     },
   }), [theme]);
 

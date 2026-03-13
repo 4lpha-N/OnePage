@@ -47,16 +47,16 @@ export default function Header({
 
           {/* ── Buttons: ab md sichtbar ───────────────── */}
           <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1 }}>
-            <Button color="primary" size="large" onClick={onToggleTheme} variant="text">
+            <Button color="secondary" size="large" onClick={onToggleTheme} variant="text">
               <CgDarkMode />
             </Button>
-            <Button color="primary" size="large" onClick={onToggleOverview} variant={overviewMode ? 'contained' : 'outlined'}>
+            <Button color="secondary" size="large" onClick={onToggleOverview} variant={overviewMode ? 'contained' : 'outlined'}>
               <CgMenuGridR />
             </Button>
-            <Button color="primary" size="large" onClick={onToggleKeyboard} variant={keyboardEnabled ? 'contained' : 'outlined'}>
+            <Button color="secondary" size="large" onClick={onToggleKeyboard} variant={keyboardEnabled ? 'contained' : 'outlined'}>
               <MdControlCamera />
             </Button>
-            <Button color="primary" size="large" onClick={onToggleNav} variant={navEnabled ? 'contained' : 'outlined'}>
+            <Button color="secondary" size="large" onClick={onToggleNav} variant={navEnabled ? 'contained' : 'outlined'}>
               <HiOutlineArrowsExpand />
             </Button>
           </Box>
