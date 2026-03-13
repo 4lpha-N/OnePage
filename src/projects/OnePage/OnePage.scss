@@ -127,6 +127,13 @@
       filter: brightness(0.93) saturate(1.1);
       outline-color: color-mix(in srgb, var(--color) 70%, transparent);
     }
+
+    &.onepage-page--focused {
+      outline-color: color-mix(in srgb, var(--color) 90%, transparent);
+      outline-width: 3px;
+      filter: brightness(0.9) saturate(1.2);
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--color) 25%, transparent);
+    }
   }
 
   // Navigations-Pfeile im Overview ausblenden

@@ -1,8 +1,22 @@
+import type { ComponentType } from 'react';
+import { useEffect, useRef } from 'react';
+
 export interface CookieType {
   theme: 'light' | 'dark';
   overviewMode: boolean;
   keyboardEnabled: boolean;
   navEnabled: boolean;
+}
+
+// ──────────────────────────────────────────────────────────────
+// PageDef – wird von OnePage und den Hooks gemeinsam genutzt
+// ──────────────────────────────────────────────────────────────
+export interface PageDef {
+  id: number;
+  row: number;
+  col: number;
+  component: ComponentType;
+  bg?: string;
 }
 
 // Setzt ein Cookie mit einem Objekt als Wert
@@ -24,7 +38,6 @@ export function getCookieObject(name: string): CookieType | null {
   }
   return null;
 }
-import { useEffect, useRef } from 'react';
 
 // ──────────────────────────────────────────────────────────────
 // Pfeiltasten → Navigations-Delta
@@ -108,4 +121,70 @@ export function useArrowKeyNavigation(
       keys.clear();
     };
   }, [enabled, transitionMs]);
+}
+
+// ──────────────────────────────────────────────────────────────
+// useOverviewKeyNavigation
+//
+// Keyboard-Navigation im Overview-Modus:
+//   Pfeiltasten     → benachbarte Seite fokussieren
+//   Tab / Shift+Tab → zyklisch durch alle Seiten (Lesereihenfolge)
+//   Enter / Space   → fokussierte Seite bestätigen (wie Klick)
+//
+// @param enabled      Aktiv solange der Overview-Modus offen ist
+// @param setFocused   State-Setter für die fokussierte Seite
+// @param sortedPages  Alle Seiten in Lesereihenfolge (für Tab)
+// @param pageMap      Map "row,col" → PageDef (für Pfeiltasten)
+// @param onConfirm    Wird mit der fokussierten Seite aufgerufen
+// ──────────────────────────────────────────────────────────────
+export function useOverviewKeyNavigation(
+  enabled: boolean,
+  setFocused: (updater: (prev: PageDef) => PageDef) => void,
+  sortedPages: PageDef[],
+  pageMap: Map<string, PageDef>,
+  onConfirm: (page: PageDef) => void,
+): void {
+  const onConfirmRef = useRef(onConfirm);
+  useEffect(() => { onConfirmRef.current = onConfirm; }, [onConfirm]);
+
+  const setFocusedRef = useRef(setFocused);
+  useEffect(() => { setFocusedRef.current = setFocused; }, [setFocused]);
+
+  useEffect(() => {
+    if (!enabled) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        setFocusedRef.current(prev => {
+          const idx = sortedPages.findIndex(p => p.id === prev.id);
+          return e.shiftKey
+            ? sortedPages[(idx - 1 + sortedPages.length) % sortedPages.length]
+            : sortedPages[(idx + 1) % sortedPages.length];
+        });
+        return;
+      }
+
+      if (e.key in ARROW_DELTA) {
+        e.preventDefault();
+        const { dr, dc } = ARROW_DELTA[e.key];
+        setFocusedRef.current(prev => {
+          const target = pageMap.get(`${prev.row + dr},${prev.col + dc}`);
+          return target ?? prev;
+        });
+        return;
+      }
+
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        setFocusedRef.current(prev => {
+          onConfirmRef.current(prev);
+          return prev;
+        });
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [enabled, sortedPages, pageMap]);
 }

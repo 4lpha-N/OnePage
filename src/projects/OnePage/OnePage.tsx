@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import './OnePage.scss';
-import { useArrowKeyNavigation, setCookieObject, getCookieObject } from './utils/functions';
+import { useArrowKeyNavigation, useOverviewKeyNavigation, setCookieObject, getCookieObject } from './utils/functions';
+import type { PageDef } from './utils/functions';
 import Header from './components/Header/Header';
 import { GoArrowUpLeft, GoArrowUp, GoArrowUpRight, GoArrowLeft, GoArrowRight, GoArrowDownLeft, GoArrowDown, GoArrowDownRight } from 'react-icons/go';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -35,14 +36,6 @@ const muiTheme = createTheme({
 //  ───────────────┼───────────────┼───────────────
 //  Seite 7 (2,0) │ Seite 8 (2,1) │ Seite 9 (2,2)
 // ──────────────────────────────────────────────
-
-interface PageDef {
-  id: number;
-  row: number;
-  col: number;
-  component: React.ComponentType;
-  bg?: string;
-}
 
 function HomeContent() {
   return (
@@ -91,6 +84,11 @@ const PAGES: PageDef[] = [
 // Schnelle Positionssuche: "row,col" → PageDef
 const PAGE_MAP = new Map<string, PageDef>(PAGES.map(p => [`${p.row},${p.col}`, p]));
 
+// Seiten in Lesereihenfolge (für Tab-Navigation im Overview)
+const SORTED_PAGES = [...PAGES].sort((a, b) =>
+  a.row !== b.row ? a.row - b.row : a.col - b.col,
+);
+
 // ──────────────────────────────────────────────
 // Richtungen mit CSS-Grid-Area-Namen
 // ──────────────────────────────────────────────
@@ -123,6 +121,22 @@ export default function OnePage() {
   const [overviewMode, setOverviewMode] = useState(cookie?.overviewMode ?? false);
   const [keyboardEnabled, setKeyboardEnabled] = useState(cookie?.keyboardEnabled ?? false);
   const [navEnabled, setNavEnabled] = useState(cookie?.navEnabled ?? false);
+  const [focusedPage, setFocusedPage] = useState<PageDef>(() => PAGE_MAP.get('1,1')!);
+
+  // Fokus auf aktuelle Seite setzen, wenn Overview geöffnet wird
+  useEffect(() => {
+    if (overviewMode) setFocusedPage(current);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [overviewMode]);
+
+  // Keyboard-Navigation im Overview-Modus
+  useOverviewKeyNavigation(
+    overviewMode,
+    setFocusedPage,
+    SORTED_PAGES,
+    PAGE_MAP,
+    (page) => { setCurrent(page); setOverviewMode(false); },
+  );
 
   const toggleTheme = () => {
     setTheme(prev => prev === 'light' ? 'dark' : 'light');
@@ -217,7 +231,7 @@ export default function OnePage() {
         {PAGES.map(page => (
           <div
             key={page.id}
-            className="onepage-page"
+            className={`onepage-page${overviewMode && focusedPage.id === page.id ? ' onepage-page--focused' : ''}`}
             style={{
               gridRow:    page.row + 1,
               gridColumn: page.col + 1,
