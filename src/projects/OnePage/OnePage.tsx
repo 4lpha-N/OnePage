@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import './OnePage.scss';
 import { useArrowKeyNavigation, useOverviewKeyNavigation, setCookieObject, getCookieObject } from './utils/functions';
 import type { PageDef } from './utils/functions';
@@ -7,26 +7,6 @@ import { GoArrowUpLeft, GoArrowUp, GoArrowUpRight, GoArrowLeft, GoArrowRight, Go
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Grid, Typography } from '@mui/material';
 
-// Default Breakpoints: xs=0, sm=600, md=900, lg=1200, xl=1536
-const muiTheme = createTheme({
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 900,
-      lg: 1200,
-      xl: 1536,
-    },
-  },
-  palette: {
-    primary: {
-      main: '#b71c1c',
-    },
-    secondary: {
-      main: '#b71c1c',
-    },
-  },
-});
 // ──────────────────────────────────────────────
 // Seitenraster (Zeile / Spalte, 0-basiert):
 //
@@ -122,6 +102,18 @@ export default function OnePage() {
   const [keyboardEnabled, setKeyboardEnabled] = useState(cookie?.keyboardEnabled ?? false);
   const [navEnabled, setNavEnabled] = useState(cookie?.navEnabled ?? false);
   const [focusedPage, setFocusedPage] = useState<PageDef>(() => PAGE_MAP.get('1,1')!);
+
+  // Default Breakpoints: xs=0, sm=600, md=900, lg=1200, xl=1536
+  const muiTheme = useMemo(() => createTheme({
+    breakpoints: {
+      values: { xs: 0, sm: 600, md: 900, lg: 1200, xl: 1536 },
+    },
+    palette: {
+      mode: theme,
+      primary: { main: '#b71c1c' },
+      secondary: { main: '#b71c1c' },
+    },
+  }), [theme]);
 
   // Fokus auf aktuelle Seite setzen, wenn Overview geöffnet wird
   useEffect(() => {
@@ -232,6 +224,7 @@ export default function OnePage() {
           <div
             key={page.id}
             className={`onepage-page${overviewMode && focusedPage.id === page.id ? ' onepage-page--focused' : ''}`}
+            inert={!overviewMode && page.id !== current.id}
             style={{
               gridRow:    page.row + 1,
               gridColumn: page.col + 1,

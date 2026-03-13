@@ -4,7 +4,7 @@
   position: fixed;
   top: $buttonSpacer + $pagePadding + ($buttonGap);
   left: $buttonSpacer + $pagePadding + ($buttonGap);
-  width: calc(100vw - (#{$buttonSpacer} + #{$pagePadding}) * 2 - #{$buttonGap} * 2);
+  width: calc(100vw - (#{$buttonSpacer} + #{$pagePadding}) * 2);
   height: $headerHeight;
   z-index: $zIndexNav;
   background-color: color-mix(in srgb, var(--bg-lighter) 25%, transparent);
