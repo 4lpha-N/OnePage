@@ -22,7 +22,7 @@ function HomeContent() {
     <div>
       <Grid container spacing={4}>
           <Grid size={{ xs: 12}} display={'flex'} justifyContent={'center'} alignItems={'center'}>
-            <Typography variant="h4">1 - Home</Typography>
+            <Typography variant="h4">- 1 -</Typography>
           </Grid>
       </Grid>
       <Grid container spacing={4}>
@@ -189,15 +189,15 @@ export default function OnePage() {
           const exists = PAGE_MAP.has(
             `${current.row + dir.dr},${current.col + dir.dc}`,
           );
-          if (!exists) return null;
 
           return (
             <button
               key={dir.area}
-              className={`onepage-nav-btn onepage-nav-btn--${dir.area}`}
+              className={`onepage-nav-btn onepage-nav-btn--${dir.area}${exists ? ' onepage-nav-btn--exists' : ''}`}
               onClick={() => navigate(dir.dr, dir.dc)}
               aria-label={dir.label}
               title={dir.label}
+              disabled={!exists}
             >
               {dir.symbol}
             </button>

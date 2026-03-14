@@ -76,7 +76,7 @@
   padding: $pagePadding;
   gap: 4px;
 
-  &--visible .onepage-nav-btn {
+  &--visible .onepage-nav-btn--exists {
     transform: scale(1);
     opacity: 1;
     pointer-events: all;
