@@ -1,11 +1,12 @@
-import React, { useState, useCallback, useEffect, useMemo } from 'react';
+import React, { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 import './OnePage.scss';
 import { useArrowKeyNavigation, useOverviewKeyNavigation, setCookieObject, getCookieObject } from './utils/functions';
 import type { PageDef } from './utils/functions';
 import Header from './components/Header/Header';
 import { GoArrowUpLeft, GoArrowUp, GoArrowUpRight, GoArrowLeft, GoArrowRight, GoArrowDownLeft, GoArrowDown, GoArrowDownRight } from 'react-icons/go';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { Grid, Typography } from '@mui/material';
+import { Grid, Typography, Button } from '@mui/material';
+import { SnackbarProvider, enqueueSnackbar } from 'notistack';
 
 // ──────────────────────────────────────────────
 // Seitenraster (Zeile / Spalte, 0-basiert):
@@ -103,6 +104,9 @@ export default function OnePage() {
   const [navEnabled, setNavEnabled] = useState(cookie?.navEnabled ?? false);
   const [focusedPage, setFocusedPage] = useState<PageDef>(() => PAGE_MAP.get('1,1')!);
 
+  // Vorherige Werte für Änderungserkennung im Cookie-Effect
+  const prevStates = useRef({ theme, overviewMode, keyboardEnabled, navEnabled });
+
   // Default Breakpoints: xs=0, sm=600, md=900, lg=1200, xl=1536
   const muiTheme = useMemo(() => createTheme({
     breakpoints: {
@@ -134,8 +138,19 @@ export default function OnePage() {
     setTheme(prev => prev === 'light' ? 'dark' : 'light');
   }
 
-  // States ins Cookie schreiben
+  // States ins Cookie schreiben + geänderte Einstellung als Snackbar
   useEffect(() => {
+    const prev = prevStates.current;
+    if (prev.theme !== theme)
+      enqueueSnackbar(`Theme: ${theme === 'dark' ? 'Dunkel' : 'Hell'}`, { variant: 'default' });
+    // if (prev.overviewMode !== overviewMode)
+    //   enqueueSnackbar(`Übersicht: ${overviewMode ? 'an' : 'aus'}`, { variant: 'default' });
+    if (prev.keyboardEnabled !== keyboardEnabled)
+      enqueueSnackbar(`Tastatur-Navigation: ${keyboardEnabled ? 'an' : 'aus'}`, { variant: 'default' });
+    if (prev.navEnabled !== navEnabled)
+      enqueueSnackbar(`Navigations-Pfeile: ${navEnabled ? 'an' : 'aus'}`, { variant: 'default' });
+    prevStates.current = { theme, overviewMode, keyboardEnabled, navEnabled };
+
     setCookieObject('4lpha_onepage_states', {
       theme,
       overviewMode,
@@ -178,69 +193,71 @@ export default function OnePage() {
   };
 
   return (
-    <ThemeProvider theme={muiTheme}>
-    <div className={`onepage-wrapper${overviewMode ? ' onepage-wrapper--overview' : ''}`}>
-      {/* ── Navigations-Overlay ──────────────── */}
-      <nav
-        className={`onepage-nav${navEnabled ? ' onepage-nav--visible' : ''}`}
-        aria-label="Seitennavigation"
-      >
-        {DIRECTIONS.map(dir => {
-          const exists = PAGE_MAP.has(
-            `${current.row + dir.dr},${current.col + dir.dc}`,
-          );
+    <SnackbarProvider maxSnack={3} preventDuplicate={false} autoHideDuration={1000} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+      <ThemeProvider theme={muiTheme}>
+      <div className={`onepage-wrapper${overviewMode ? ' onepage-wrapper--overview' : ''}`}>
+        {/* ── Navigations-Overlay ──────────────── */}
+        <nav
+          className={`onepage-nav${navEnabled ? ' onepage-nav--visible' : ''}`}
+          aria-label="Seitennavigation"
+        >
+          {DIRECTIONS.map(dir => {
+            const exists = PAGE_MAP.has(
+              `${current.row + dir.dr},${current.col + dir.dc}`,
+            );
 
-          return (
-            <button
-              key={dir.area}
-              className={`onepage-nav-btn onepage-nav-btn--${dir.area}${exists ? ' onepage-nav-btn--exists' : ''}`}
-              onClick={() => navigate(dir.dr, dir.dc)}
-              aria-label={dir.label}
-              title={dir.label}
-              disabled={!exists}
+            return (
+              <button
+                key={dir.area}
+                className={`onepage-nav-btn onepage-nav-btn--${dir.area}${exists ? ' onepage-nav-btn--exists' : ''}`}
+                onClick={() => navigate(dir.dr, dir.dc)}
+                aria-label={dir.label}
+                title={dir.label}
+                disabled={!exists}
+              >
+                {dir.symbol}
+              </button>
+            );
+          })}
+        </nav>
+        {/* ── Header ─────────────────────── */}
+        <Header
+          classes={navEnabled ? '' : 'no-nav'}
+          theme={theme}
+          overviewMode={overviewMode}
+          keyboardEnabled={keyboardEnabled}
+          navEnabled={navEnabled}
+          onToggleOverview={() => setOverviewMode(v => !v)}
+          onToggleKeyboard={() => setKeyboardEnabled(v => !v)}
+          onToggleNav={() => setNavEnabled(v => !v)}
+          onToggleTheme={toggleTheme}
+        />
+        {/* ── Seitenraster ─────────────────────── */}
+        <div
+          className="onepage-grid"
+          style={gridStyle}
+        >
+          {PAGES.map(page => (
+            <div
+              key={page.id}
+              className={`onepage-page${overviewMode && focusedPage.id === page.id ? ' onepage-page--focused' : ''}`}
+              inert={!overviewMode && page.id !== current.id}
+              style={{
+                gridRow:    page.row + 1,
+                gridColumn: page.col + 1,
+                // backgroundColor: page.bg,
+              }}
+              onClick={() => handlePageClick(page)}
             >
-              {dir.symbol}
-            </button>
-          );
-        })}
-      </nav>
-      {/* ── Header ─────────────────────── */}
-      <Header
-        classes={navEnabled ? '' : 'no-nav'}
-        theme={theme}
-        overviewMode={overviewMode}
-        keyboardEnabled={keyboardEnabled}
-        navEnabled={navEnabled}
-        onToggleOverview={() => setOverviewMode(v => !v)}
-        onToggleKeyboard={() => setKeyboardEnabled(v => !v)}
-        onToggleNav={() => setNavEnabled(v => !v)}
-        onToggleTheme={toggleTheme}
-      />
-      {/* ── Seitenraster ─────────────────────── */}
-      <div
-        className="onepage-grid"
-        style={gridStyle}
-      >
-        {PAGES.map(page => (
-          <div
-            key={page.id}
-            className={`onepage-page${overviewMode && focusedPage.id === page.id ? ' onepage-page--focused' : ''}`}
-            inert={!overviewMode && page.id !== current.id}
-            style={{
-              gridRow:    page.row + 1,
-              gridColumn: page.col + 1,
-              // backgroundColor: page.bg,
-            }}
-            onClick={() => handlePageClick(page)}
-          >
-            {/* ── Seiteninhalt – hier anpassen ──── */}
-            <div className={'onepage-content' + (navEnabled ? '' : ' no-nav')}>
-                <page.component />
+              {/* ── Seiteninhalt – hier anpassen ──── */}
+              <div className={'onepage-content' + (navEnabled ? '' : ' no-nav')}>
+                  <page.component />
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
-    </ThemeProvider>
+      </ThemeProvider>
+    </SnackbarProvider>
   );
 }
