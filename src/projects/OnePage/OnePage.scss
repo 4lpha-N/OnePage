@@ -99,7 +99,7 @@
   transform: scale(0);
   opacity: 0;
   transition:
-    // var(--transition),
+    var(--transition),
     transform        300ms cubic-bezier(0.4, 0, 0.2, 1),
     opacity          300ms cubic-bezier(0.4, 0, 0.2, 1),
     background-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
