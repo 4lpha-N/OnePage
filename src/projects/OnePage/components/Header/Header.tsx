@@ -6,7 +6,7 @@ import { HiOutlineArrowsExpand } from "react-icons/hi";
 import { CgDarkMode } from "react-icons/cg";
 import { TbMenu2 } from "react-icons/tb";
 import Button from '@mui/material/Button';
-import { Box, IconButton, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, Menu, MenuItem, Tooltip, Typography, Grid } from '@mui/material';
 
 interface HeaderProps {
   classes: string;
@@ -42,8 +42,12 @@ export default function Header({
   return (
     <header className={`onepage-header ${classes}`}>
       <div className="onepage-header-inner">
-        <span className="onepage-header-title">4lpha</span>
-        <div className="onepage-header-actions">
+        <Grid container spacing={4}>
+          <Grid size={{ xs: 4}} display={'flex'} justifyContent={'flex-start'} alignItems={'center'}>
+            <span className="onepage-header-title">4lpha</span>
+          </Grid>
+          <Grid size={{ xs: 8}} display={'flex'} justifyContent={'flex-end'} alignItems={'center'}>
+            <div className="onepage-header-actions">
 
           {/* ── Buttons: ab md sichtbar ───────────────── */}
           <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1 }}>
@@ -86,28 +90,31 @@ export default function Header({
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           >
             <MenuItem onClick={() => { onToggleTheme(); handleMenuClose(); }}>
-              <Typography noWrap style={{ padding: '2px 8px' }}>
+              <Typography noWrap style={{ display: 'flex', padding: '6px 8px' }}>
                 <CgDarkMode />
               </Typography>
             </MenuItem>
             <MenuItem onClick={() => { onToggleOverview(); handleMenuClose(); }}>
-              <Typography color={overviewMode ? 'primary' : ''} noWrap style={{ padding: '2px 8px' }}>
+              <Typography color={overviewMode ? 'primary' : ''} noWrap style={{ display: 'flex', padding: '6px 8px' }}>
                 <CgMenuGridR />
               </Typography>
             </MenuItem>
             <MenuItem onClick={() => { onToggleKeyboard(); handleMenuClose(); }}>
-              <Typography color={keyboardEnabled ? 'primary' : ''} noWrap style={{ padding: '2px 8px' }}>
+              <Typography color={keyboardEnabled ? 'primary' : ''} noWrap style={{ display: 'flex', padding: '6px 8px' }}>
                 <MdControlCamera />
               </Typography>
             </MenuItem>
             <MenuItem onClick={() => { onToggleNav(); handleMenuClose(); }}>
-              <Typography color={navEnabled ? 'primary' : ''} noWrap style={{ padding: '2px 8px' }}>
+              <Typography color={navEnabled ? 'primary' : ''} noWrap style={{ display: 'flex', padding: '6px 8px' }}>
                 <HiOutlineArrowsExpand />
               </Typography>
             </MenuItem>
           </Menu>
 
         </div>
+          </Grid>
+        </Grid>
+        
       </div>
     </header>
   );

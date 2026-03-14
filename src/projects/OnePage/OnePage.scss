@@ -21,7 +21,7 @@
   // Ursprung oben links – benötigt für korrekte Overview-Skalierung
   transform-origin: 0 0;
   // Slide- & Zoom-Animation beim Seitenwechsel
-  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: var(--transition), transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
 }
 
@@ -41,13 +41,12 @@
   height: 100%;
   box-sizing: border-box;
   overflow: auto;  // nur der Inhalt scrollt
-  // text-align: center;
-  // user-select: none;
   z-index: $zIndexContent;
   position: relative;
   padding: $contentPadding;
   padding-top: $contentPadding + $headerHeight;
-  
+  transition: var(--transition), padding 300ms cubic-bezier(0.4, 0, 0.2, 1);
+
   &.no-nav {
     padding: $pagePadding;
     padding-top: $contentPadding + 16px;
@@ -76,14 +75,30 @@
   grid-template-rows:    $buttonSpacer 1fr $buttonSpacer;
   padding: $pagePadding;
   gap: 4px;
+
+  &--visible .onepage-nav-btn {
+    transform: scale(1);
+    opacity: 1;
+    pointer-events: all;
+  }
 }
 
 // ── Navigations-Button (gemeinsam) ───────────────────────────
 .onepage-nav-btn {
-  pointer-events: all;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  // Eingeklappt als Standard
+  transform: scale(0);
+  opacity: 0;
+  transition:
+    // var(--transition),
+    transform        300ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity          300ms cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow       300ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color     300ms cubic-bezier(0.4, 0, 0.2, 1);
 
   color: var(--color);
   font-size: 1.4rem;
@@ -118,6 +133,7 @@
   .onepage-page {
     cursor: pointer;
     transition:
+      var(--transition),
       filter     0.15s ease,
       outline    0.15s ease;
     outline: 2px solid color-mix(in srgb, var(--color) 10%, transparent);
@@ -143,12 +159,12 @@
   }
 }
 
-// ── Grid-Area-Zuweisung ───────────────────────────────────────
-.onepage-nav-btn--tl { grid-area: tl; }
-.onepage-nav-btn--tc { grid-area: tc; }
-.onepage-nav-btn--tr { grid-area: tr; }
-.onepage-nav-btn--ml { grid-area: ml; }
-.onepage-nav-btn--mr { grid-area: mr; }
-.onepage-nav-btn--bl { grid-area: bl; }
-.onepage-nav-btn--bc { grid-area: bc; }
-.onepage-nav-btn--br { grid-area: br; }
+// ── Grid-Area-Zuweisung + transform-origin ────────────────────
+.onepage-nav-btn--tl { grid-area: tl; transform-origin: top    left;   }
+.onepage-nav-btn--tc { grid-area: tc; transform-origin: top    center; }
+.onepage-nav-btn--tr { grid-area: tr; transform-origin: top    right;  }
+.onepage-nav-btn--ml { grid-area: ml; transform-origin: center left;   }
+.onepage-nav-btn--mr { grid-area: mr; transform-origin: center right;  }
+.onepage-nav-btn--bl { grid-area: bl; transform-origin: bottom left;   }
+.onepage-nav-btn--bc { grid-area: bc; transform-origin: bottom center; }
+.onepage-nav-btn--br { grid-area: br; transform-origin: bottom right;  }

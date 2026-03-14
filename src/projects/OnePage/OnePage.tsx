@@ -181,28 +181,29 @@ export default function OnePage() {
     <ThemeProvider theme={muiTheme}>
     <div className={`onepage-wrapper${overviewMode ? ' onepage-wrapper--overview' : ''}`}>
       {/* ── Navigations-Overlay ──────────────── */}
-      {navEnabled && (
-        <nav className="onepage-nav" aria-label="Seitennavigation">
-          {DIRECTIONS.map(dir => {
-            const exists = PAGE_MAP.has(
-              `${current.row + dir.dr},${current.col + dir.dc}`,
-            );
-            if (!exists) return null;
+      <nav
+        className={`onepage-nav${navEnabled ? ' onepage-nav--visible' : ''}`}
+        aria-label="Seitennavigation"
+      >
+        {DIRECTIONS.map(dir => {
+          const exists = PAGE_MAP.has(
+            `${current.row + dir.dr},${current.col + dir.dc}`,
+          );
+          if (!exists) return null;
 
-            return (
-              <button
-                key={dir.area}
-                className={`onepage-nav-btn onepage-nav-btn--${dir.area}`}
-                onClick={() => navigate(dir.dr, dir.dc)}
-                aria-label={dir.label}
-                title={dir.label}
-              >
-                {dir.symbol}
-              </button>
-            );
-          })}
-        </nav>
-      )}
+          return (
+            <button
+              key={dir.area}
+              className={`onepage-nav-btn onepage-nav-btn--${dir.area}`}
+              onClick={() => navigate(dir.dr, dir.dc)}
+              aria-label={dir.label}
+              title={dir.label}
+            >
+              {dir.symbol}
+            </button>
+          );
+        })}
+      </nav>
       {/* ── Header ─────────────────────── */}
       <Header
         classes={navEnabled ? '' : 'no-nav'}
