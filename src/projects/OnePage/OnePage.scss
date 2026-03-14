@@ -9,6 +9,12 @@
   height: 100vh;
   overflow: hidden;
   position: relative;
+
+  // Responsive button-spacer als CSS Custom Property
+  --button-spacer: #{$buttonSpacer};
+  @media (max-width: $mediaMD) {
+    --button-spacer: 30px;
+  }
 }
 
 // ── Vollständiges Seitenraster ───────────────────────────────
@@ -43,13 +49,13 @@
   overflow: auto;  // nur der Inhalt scrollt
   z-index: $zIndexContent;
   position: relative;
-  padding: $contentPadding;
-  padding-top: $contentPadding + $headerHeight;
+  padding: calc(#{$pagePadding} + var(--button-spacer) + 16px);
+  padding-top: calc(#{$pagePadding} + var(--button-spacer) + 16px + #{$headerHeight});
   transition: var(--transition), padding 300ms cubic-bezier(0.4, 0, 0.2, 1);
 
   &.no-nav {
     padding: $pagePadding;
-    padding-top: $contentPadding + 16px;
+    padding-top: calc(#{$pagePadding} + var(--button-spacer) + 16px);
   }
 
   p {
@@ -71,8 +77,8 @@
     'tl tc tr'
     'ml .  mr'
     'bl bc br';
-  grid-template-columns: $buttonSpacer 1fr $buttonSpacer;
-  grid-template-rows:    $buttonSpacer 1fr $buttonSpacer;
+  grid-template-columns: var(--button-spacer) 1fr var(--button-spacer);
+  grid-template-rows:    var(--button-spacer) 1fr var(--button-spacer);
   padding: $pagePadding;
   gap: 4px;
 

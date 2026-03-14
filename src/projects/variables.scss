@@ -1,10 +1,16 @@
 // ── Variablen ─────────────────────────────────────────
 $headerHeight: 70px;
 $pagePadding: 8px;
-$buttonSpacer: 50px;
+$buttonSpacer: 50px;  // SCSS-Fallback; responsiver Wert via --button-spacer
 $buttonGap: 4px;
-$contentPadding: $pagePadding + $buttonSpacer + 16px;
+$contentPadding: $pagePadding + $buttonSpacer + 16px; // statischer Fallback
 $zIndexContent: 1;
 $zIndexNav: 10;
 $zIndexUpper: 20;
 $zIndexOverlay: 30;
+
+$mediaXS: 0px;
+$mediaSM: 600px;
+$mediaMD: 900px;
+$mediaLG: 1200px;
+$mediaXL: 1536px;

@@ -2,9 +2,9 @@
 
 .onepage-header {
   position: fixed;
-  top: $buttonSpacer + $pagePadding + ($buttonGap);
-  left: $buttonSpacer + $pagePadding + ($buttonGap);
-  width: calc(100vw - (#{$buttonSpacer} + #{$pagePadding})* 2 - 2 * $buttonGap);
+  top: calc(var(--button-spacer) + #{$pagePadding} + #{$buttonGap});
+  left: calc(var(--button-spacer) + #{$pagePadding} + #{$buttonGap});
+  width: calc(100vw - (var(--button-spacer) + #{$pagePadding}) * 2 - 2 * #{$buttonGap});
   height: $headerHeight;
   z-index: $zIndexNav;
   background-color: color-mix(in srgb, var(--bg-lighter) 25%, transparent);
