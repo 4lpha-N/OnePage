@@ -55,7 +55,7 @@
 
   &.no-nav {
     padding: $pagePadding;
-    padding-top: calc(#{$pagePadding} + var(--button-spacer) + 16px);
+    padding-top: calc(#{$pagePadding} + var(--button-spacer) + 40px);
   }
 
   p {
