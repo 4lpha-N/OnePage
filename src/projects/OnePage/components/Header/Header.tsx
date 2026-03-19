@@ -1,12 +1,21 @@
 import React from 'react';
 import './Header.scss';
-import { CgMenuGridR } from "react-icons/cg";
-import { MdControlCamera } from "react-icons/md";
-import { HiOutlineArrowsExpand } from "react-icons/hi";
-import { CgDarkMode } from "react-icons/cg";
-import { TbMenu2 } from "react-icons/tb";
+import { CgMenuGridR } from 'react-icons/cg';
+import { MdControlCamera } from 'react-icons/md';
+import { HiOutlineArrowsExpand } from 'react-icons/hi';
+import { CgDarkMode } from 'react-icons/cg';
+import { TbMenu2 } from 'react-icons/tb';
 import Button from '@mui/material/Button';
-import { Box, IconButton, Menu, MenuItem, Tooltip, Typography, Grid } from '@mui/material';
+import {
+  Box,
+  IconButton,
+  Menu,
+  MenuItem,
+  Tooltip,
+  Typography,
+  Grid,
+  Container,
+} from '@mui/material';
 
 interface HeaderProps {
   classes: string;
@@ -42,79 +51,140 @@ export default function Header({
   return (
     <header className={`onepage-header ${classes}`}>
       <div className="onepage-header-inner">
-        <Grid container spacing={4}>
-          <Grid size={{ xs: 4}} display={'flex'} justifyContent={'flex-start'} alignItems={'center'}>
-            <span className="onepage-header-title">4lpha</span>
+        <Container maxWidth="xl">
+          <Grid container spacing={4}>
+            <Grid
+              size={{ xs: 4 }}
+              display={'flex'}
+              justifyContent={'flex-start'}
+              alignItems={'center'}
+            >
+              <span className="onepage-header-title">4lpha</span>
+            </Grid>
+            <Grid
+              size={{ xs: 8 }}
+              display={'flex'}
+              justifyContent={'flex-end'}
+              alignItems={'center'}
+            >
+              <div className="onepage-header-actions">
+                {/* ── Buttons: ab md sichtbar ───────────────── */}
+                <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1 }}>
+                  <Button color="secondary" size="large" onClick={onToggleTheme} variant="text">
+                    <CgDarkMode />
+                  </Button>
+                  <Button
+                    color="secondary"
+                    size="large"
+                    onClick={onToggleOverview}
+                    variant={overviewMode ? 'contained' : 'outlined'}
+                  >
+                    <CgMenuGridR />
+                  </Button>
+                  <Button
+                    color="secondary"
+                    size="large"
+                    onClick={onToggleKeyboard}
+                    variant={keyboardEnabled ? 'contained' : 'outlined'}
+                  >
+                    <MdControlCamera />
+                  </Button>
+                  <Button
+                    color="secondary"
+                    size="large"
+                    onClick={onToggleNav}
+                    variant={navEnabled ? 'contained' : 'outlined'}
+                  >
+                    <HiOutlineArrowsExpand />
+                  </Button>
+                </Box>
+
+                {/* ── Hamburger-Menü: unter md sichtbar ────── */}
+                <Box
+                  sx={{
+                    display: { xs: 'flex', md: 'none' },
+                    alignItems: 'center',
+                  }}
+                >
+                  <Tooltip title="Menü">
+                    <IconButton
+                      onClick={handleMenuOpen}
+                      // color="primary"
+                      size="large"
+                      aria-controls={open ? 'header-menu' : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? 'true' : undefined}
+                    >
+                      <TbMenu2 />
+                    </IconButton>
+                  </Tooltip>
+                </Box>
+                <Menu
+                  anchorEl={anchorEl}
+                  id="header-menu"
+                  open={open}
+                  onClose={handleMenuClose}
+                  disableScrollLock
+                  transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                  anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                >
+                  <MenuItem
+                    onClick={() => {
+                      onToggleTheme();
+                      handleMenuClose();
+                    }}
+                  >
+                    <Typography noWrap style={{ display: 'flex', padding: '6px 8px' }}>
+                      <CgDarkMode />
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      onToggleOverview();
+                      handleMenuClose();
+                    }}
+                  >
+                    <Typography
+                      color={overviewMode ? 'primary' : ''}
+                      noWrap
+                      style={{ display: 'flex', padding: '6px 8px' }}
+                    >
+                      <CgMenuGridR />
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      onToggleKeyboard();
+                      handleMenuClose();
+                    }}
+                  >
+                    <Typography
+                      color={keyboardEnabled ? 'primary' : ''}
+                      noWrap
+                      style={{ display: 'flex', padding: '6px 8px' }}
+                    >
+                      <MdControlCamera />
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      onToggleNav();
+                      handleMenuClose();
+                    }}
+                  >
+                    <Typography
+                      color={navEnabled ? 'primary' : ''}
+                      noWrap
+                      style={{ display: 'flex', padding: '6px 8px' }}
+                    >
+                      <HiOutlineArrowsExpand />
+                    </Typography>
+                  </MenuItem>
+                </Menu>
+              </div>
+            </Grid>
           </Grid>
-          <Grid size={{ xs: 8}} display={'flex'} justifyContent={'flex-end'} alignItems={'center'}>
-            <div className="onepage-header-actions">
-
-          {/* ── Buttons: ab md sichtbar ───────────────── */}
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1 }}>
-            <Button color="secondary" size="large" onClick={onToggleTheme} variant="text">
-              <CgDarkMode />
-            </Button>
-            <Button color="secondary" size="large" onClick={onToggleOverview} variant={overviewMode ? 'contained' : 'outlined'}>
-              <CgMenuGridR />
-            </Button>
-            <Button color="secondary" size="large" onClick={onToggleKeyboard} variant={keyboardEnabled ? 'contained' : 'outlined'}>
-              <MdControlCamera />
-            </Button>
-            <Button color="secondary" size="large" onClick={onToggleNav} variant={navEnabled ? 'contained' : 'outlined'}>
-              <HiOutlineArrowsExpand />
-            </Button>
-          </Box>
-
-          {/* ── Hamburger-Menü: unter md sichtbar ────── */}
-          <Box sx={{ display: { xs: 'flex', md: 'none' }, alignItems: 'center' }}>
-            <Tooltip title="Menü">
-              <IconButton
-                onClick={handleMenuOpen}
-                // color="primary"
-                size="large"
-                aria-controls={open ? 'header-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-              >
-                <TbMenu2 />
-              </IconButton>
-            </Tooltip>
-          </Box>
-          <Menu
-            anchorEl={anchorEl}
-            id="header-menu"
-            open={open}
-            onClose={handleMenuClose}
-            disableScrollLock
-            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-          >
-            <MenuItem onClick={() => { onToggleTheme(); handleMenuClose(); }}>
-              <Typography noWrap style={{ display: 'flex', padding: '6px 8px' }}>
-                <CgDarkMode />
-              </Typography>
-            </MenuItem>
-            <MenuItem onClick={() => { onToggleOverview(); handleMenuClose(); }}>
-              <Typography color={overviewMode ? 'primary' : ''} noWrap style={{ display: 'flex', padding: '6px 8px' }}>
-                <CgMenuGridR />
-              </Typography>
-            </MenuItem>
-            <MenuItem onClick={() => { onToggleKeyboard(); handleMenuClose(); }}>
-              <Typography color={keyboardEnabled ? 'primary' : ''} noWrap style={{ display: 'flex', padding: '6px 8px' }}>
-                <MdControlCamera />
-              </Typography>
-            </MenuItem>
-            <MenuItem onClick={() => { onToggleNav(); handleMenuClose(); }}>
-              <Typography color={navEnabled ? 'primary' : ''} noWrap style={{ display: 'flex', padding: '6px 8px' }}>
-                <HiOutlineArrowsExpand />
-              </Typography>
-            </MenuItem>
-          </Menu>
-
-        </div>
-          </Grid>
-        </Grid>
-        
+        </Container>
       </div>
     </header>
   );
