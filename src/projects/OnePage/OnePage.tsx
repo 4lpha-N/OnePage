@@ -9,6 +9,7 @@ import {
 import type { PageDef } from './utils/functions';
 import Header from './components/Header/Header';
 import Tabs from './components/Tabs/Tabs';
+import Modal from './components/Modal/Modal';
 import {
   GoArrowUpLeft,
   GoArrowUp,
@@ -20,7 +21,7 @@ import {
   GoArrowDownRight,
 } from 'react-icons/go';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { Container, Grid, Typography, Modal, Button, Box } from '@mui/material';
+import { Container, Grid, Typography, Box } from '@mui/material';
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
 
 // ──────────────────────────────────────────────
@@ -34,10 +35,6 @@ import { SnackbarProvider, enqueueSnackbar } from 'notistack';
 // ──────────────────────────────────────────────
 
 function HomeContent() {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
   return (
     <Container maxWidth="xl">
       <Grid container spacing={4}>
@@ -56,23 +53,8 @@ function HomeContent() {
           <Tabs />
         </Grid>
         <Grid size={{ xs: 12 }}>
-          <Button onClick={handleOpen}>Open modal</Button>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-            sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-            className="onepage-modal"
-          >
-            <Box className="onepage-modal__box">
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                Text in a modal
-              </Typography>
-              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-              </Typography>
-            </Box>
+          <Modal title="Title">
+            <div>Modal Content</div>
           </Modal>
         </Grid>
       </Grid>
