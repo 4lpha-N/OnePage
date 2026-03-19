@@ -50,7 +50,7 @@ export default function Header({
 
   return (
     <header className={`onepage-header ${classes}`}>
-      <div className="onepage-header-inner">
+      <Box className="onepage-header-inner">
         <Container maxWidth="xl">
           <Grid container spacing={4}>
             <Grid
@@ -67,7 +67,7 @@ export default function Header({
               justifyContent={'flex-end'}
               alignItems={'center'}
             >
-              <div className="onepage-header-actions">
+              <Box className="onepage-header-actions">
                 {/* ── Buttons: ab md sichtbar ───────────────── */}
                 <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1 }}>
                   <Button color="secondary" size="large" onClick={onToggleTheme} variant="text">
@@ -181,11 +181,11 @@ export default function Header({
                     </Typography>
                   </MenuItem>
                 </Menu>
-              </div>
+              </Box>
             </Grid>
           </Grid>
         </Container>
-      </div>
+      </Box>
     </header>
   );
 }

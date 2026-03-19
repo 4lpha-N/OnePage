@@ -362,13 +362,13 @@ export default function OnePage() {
             onToggleTheme={toggleTheme}
           />
           {/* ── Seitenraster ─────────────────────── */}
-          <div className="onepage-grid" style={gridStyle}>
+          <Box className="onepage-grid" sx={gridStyle}>
             {PAGES.map((page) => (
-              <div
+              <Box
                 key={page.id}
                 className={`onepage-page${overviewMode && focusedPage.id === page.id ? ' onepage-page--focused' : ''}`}
                 inert={!overviewMode && page.id !== current.id}
-                style={{
+                sx={{
                   gridRow: page.row + 1,
                   gridColumn: page.col + 1,
                   // backgroundColor: page.bg,
@@ -376,12 +376,12 @@ export default function OnePage() {
                 onClick={() => handlePageClick(page)}
               >
                 {/* ── Seiteninhalt – hier anpassen ──── */}
-                <div className={'onepage-content' + (navEnabled ? '' : ' no-nav')}>
+                <Box className={'onepage-content' + (navEnabled ? '' : ' no-nav')}>
                   <page.component />
-                </div>
-              </div>
+                </Box>
+              </Box>
             ))}
-          </div>
+          </Box>
         </div>
       </ThemeProvider>
     </SnackbarProvider>
