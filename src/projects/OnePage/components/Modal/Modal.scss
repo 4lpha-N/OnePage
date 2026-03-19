@@ -1,11 +1,11 @@
 @use '../../../variables.scss' as *;
 // ── Modal ────────────────────
 .onepage-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   &__box {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: auto;
     min-width: 250px;
     max-width: 50dvw;

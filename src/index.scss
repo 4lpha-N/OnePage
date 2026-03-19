@@ -1,4 +1,4 @@
-@use "sass:color";
+@use 'sass:color';
 
 // Farbpalette als SCSS-Variablen
 $bg-dark: #222;
@@ -24,17 +24,17 @@ $primary-contrast: #fff;
   --bg-dark: #{$bg-dark};
   --bg-dark-light: #{$bg-dark-light};
   --bg-dark-dark: #{$bg-dark-dark};
-	--bg-light: #{$bg-light};
+  --bg-light: #{$bg-light};
   --bg-light-light: #{$bg-light-light};
   --bg-light-dark: #{$bg-light-dark};
-	--color-dark: #{$color-dark};
-	--color-light: #{$color-light};
-	--primary: #{$primary};
-	--primary-hover: #{$primary-hover};
-	--primary-active: #{$primary-active};
-	--primary-focus: #{$primary-focus};
-	--primary-disabled: #{$primary-disabled};
-	--primary-contrast: #{$primary-contrast};
+  --color-dark: #{$color-dark};
+  --color-light: #{$color-light};
+  --primary: #{$primary};
+  --primary-hover: #{$primary-hover};
+  --primary-active: #{$primary-active};
+  --primary-focus: #{$primary-focus};
+  --primary-disabled: #{$primary-disabled};
+  --primary-contrast: #{$primary-contrast};
 
   --bg: var(--bg-light);
   --bg-lighter: var(--bg-light-light);
@@ -52,11 +52,13 @@ $primary-contrast: #fff;
   -moz-osx-font-smoothing: grayscale;
 
   --transition:
-    background-color 0.3s ease,
-    color 0.3s ease,
-    border-color 0.3s ease,
-    box-shadow 0.3s ease,
+    background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease,
     opacity 0.3s ease;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
 }
 
 * {
@@ -70,27 +72,27 @@ body:not(.mounted) {
 }
 
 // Theme light
-[data-theme="light"] {
-	--bg: var(--bg-light);
+[data-theme='light'] {
+  --bg: var(--bg-light);
   --bg-lighter: var(--bg-light-light);
   --bg-darker: var(--bg-light-dark);
-	--color: var(--color-dark);
+  --color: var(--color-dark);
 }
 
 // Theme dark
-[data-theme="dark"] {
-	--bg: var(--bg-dark);
+[data-theme='dark'] {
+  --bg: var(--bg-dark);
   --bg-lighter: var(--bg-dark-light);
   --bg-darker: var(--bg-dark-dark);
-	--color: var(--color-light);
+  --color: var(--color-light);
 }
 
 // Automatisches Dark Theme via OS
 @media (prefers-color-scheme: dark) {
-	:root:not([data-theme="light"]) {
-		--bg: var(--bg-dark);
+  :root:not([data-theme='light']) {
+    --bg: var(--bg-dark);
     --bg-lighter: var(--bg-dark-light);
     --bg-darker: var(--bg-dark-dark);
-		--color: var(--color-light);
-	}
+    --color: var(--color-light);
+  }
 }
