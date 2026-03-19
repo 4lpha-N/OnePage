@@ -10,6 +10,7 @@ import type { PageDef } from './utils/functions';
 import Header from './components/Header/Header';
 import Tabs from './components/Tabs/Tabs';
 import Modal from './components/Modal/Modal';
+import Pagination from './components/Pagination/Pagination';
 import {
   GoArrowUpLeft,
   GoArrowUp,
@@ -54,8 +55,15 @@ function HomeContent() {
         </Grid>
         <Grid size={{ xs: 12 }}>
           <Modal title="Title">
-            <div>Modal Content</div>
+            <div style={{ width: '30vw', height: '100px', border: '1px dashed crimson' }}></div>
           </Modal>
+        </Grid>
+        <Grid size={{ xs: 12 }}>
+          <Pagination initialPage={1}>
+            <Box>1</Box>
+            <Box>2</Box>
+            <Box>3</Box>
+          </Pagination>
         </Grid>
       </Grid>
     </Container>
@@ -279,7 +287,9 @@ export default function OnePage() {
 
   // Verhindert Scrollbars auf body/html solange OnePage gemountet ist
   useEffect(() => {
-    document.body.classList.add('mounted');
+    setTimeout(() => {
+      document.body.classList.add('mounted');
+    }, 100);
     return () => {
       document.body.classList.remove('mounted');
     };
