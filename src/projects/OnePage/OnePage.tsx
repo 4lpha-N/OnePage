@@ -11,6 +11,7 @@ import Header from './components/Header/Header';
 import Tabs from './components/Tabs/Tabs';
 import Modal from './components/Modal/Modal';
 import Pagination from './components/Pagination/Pagination';
+import Accordion, { AccordionItem } from './components/Accordion/Accordion';
 import {
   GoArrowUpLeft,
   GoArrowUp,
@@ -57,6 +58,19 @@ function HomeContent() {
           <Modal title="Title">
             <div style={{ width: '30vw', height: '100px', border: '1px dashed crimson' }}></div>
           </Modal>
+        </Grid>
+        <Grid size={{ xs: 12 }}>
+          <Accordion>
+            <AccordionItem title="1">
+              <Box>1</Box>
+            </AccordionItem>
+            <AccordionItem title="2">
+              <Box>2</Box>
+            </AccordionItem>
+            <AccordionItem title="3">
+              <Box>3</Box>
+            </AccordionItem>
+          </Accordion>
         </Grid>
         <Grid size={{ xs: 12 }}>
           <Pagination initialPage={1}>
