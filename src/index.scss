@@ -18,7 +18,7 @@ $primary-disabled: color.mix($primary, $bg-light, 60%);
 $primary-contrast: #fff;
 
 $bg-dark-dark-scale: ();
-@for $i from 1 through 10 {
+@for $i from 1 through 20 {
   $bg-dark-dark-scale: map.set(
     $bg-dark-dark-scale,
     $i,
@@ -26,7 +26,7 @@ $bg-dark-dark-scale: ();
   );
 }
 $bg-dark-light-scale: ();
-@for $i from 1 through 10 {
+@for $i from 1 through 20 {
   $bg-dark-light-scale: map.set(
     $bg-dark-light-scale,
     $i,
@@ -34,7 +34,7 @@ $bg-dark-light-scale: ();
   );
 }
 $bg-light-dark-scale: ();
-@for $i from 1 through 10 {
+@for $i from 1 through 20 {
   $bg-light-dark-scale: map.set(
     $bg-light-dark-scale,
     $i,
@@ -42,7 +42,7 @@ $bg-light-dark-scale: ();
   );
 }
 $bg-light-light-scale: ();
-@for $i from 1 through 10 {
+@for $i from 1 through 20 {
   $bg-light-light-scale: map.set(
     $bg-light-light-scale,
     $i,
@@ -70,16 +70,16 @@ $bg-light-light-scale: ();
   --primary-disabled: #{$primary-disabled};
   --primary-contrast: #{$primary-contrast};
 
-  @for $i from 1 through 10 {
+  @for $i from 1 through 20 {
     --bg-dark-dark#{$i}: #{map.get($bg-dark-dark-scale, $i)};
   }
-  @for $i from 1 through 10 {
+  @for $i from 1 through 20 {
     --bg-dark-light#{$i}: #{map.get($bg-dark-light-scale, $i)};
   }
-  @for $i from 1 through 10 {
+  @for $i from 1 through 20 {
     --bg-light-dark#{$i}: #{map.get($bg-light-dark-scale, $i)};
   }
-  @for $i from 1 through 10 {
+  @for $i from 1 through 20 {
     --bg-light-light#{$i}: #{map.get($bg-light-light-scale, $i)};
   }
 
@@ -124,10 +124,10 @@ body:not(.mounted) {
   --bg-lighter: var(--bg-light-light);
   --bg-darker: var(--bg-light-dark);
   --color: var(--color-dark);
-  @for $i from 1 through 10 {
+  @for $i from 1 through 20 {
     --bg-darker#{$i}: var(--bg-light-dark#{$i});
   }
-  @for $i from 1 through 10 {
+  @for $i from 1 through 20 {
     --bg-lighter#{$i}: var(--bg-light-light#{$i});
   }
 }
@@ -138,10 +138,10 @@ body:not(.mounted) {
   --bg-lighter: var(--bg-dark-light);
   --bg-darker: var(--bg-dark-dark);
   --color: var(--color-light);
-  @for $i from 1 through 10 {
+  @for $i from 1 through 20 {
     --bg-darker#{$i}: var(--bg-dark-dark#{$i});
   }
-  @for $i from 1 through 10 {
+  @for $i from 1 through 20 {
     --bg-lighter#{$i}: var(--bg-dark-light#{$i});
   }
 }
@@ -153,10 +153,10 @@ body:not(.mounted) {
     --bg-lighter: var(--bg-dark-light);
     --bg-darker: var(--bg-dark-dark);
     --color: var(--color-light);
-    @for $i from 1 through 10 {
+    @for $i from 1 through 20 {
       --bg-darker#{$i}: var(--bg-dark-dark#{$i});
     }
-    @for $i from 1 through 10 {
+    @for $i from 1 through 20 {
       --bg-lighter#{$i}: var(--bg-dark-light#{$i});
     }
   }

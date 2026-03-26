@@ -78,8 +78,12 @@
   scrollbar-gutter: stable; // reserviert dauerhaft Platz für die Scrollbar → kein Layout-Shift
 
   // ── Scrollbar – Firefox ───────────────────────────────
-  scrollbar-width: thin;
-  scrollbar-color: var(--color) var(--bg-lighter5);
+  // scrollbar-color nur für Firefox: Chrome 121+ ignoriert sonst
+  // die ::-webkit-scrollbar-* Pseudo-Elemente inkl. :hover vollständig
+  @supports not selector(::-webkit-scrollbar) {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color) var(--bg-lighter5);
+  }
 
   // ── Scrollbar – WebKit (Chrome, Safari, Edge) ─────────
   &::-webkit-scrollbar {
@@ -88,16 +92,16 @@
   }
 
   &::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 999px;
+    background: var(--bg-lighter2);
+    border-radius: 50px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: var(--color);
-    border-radius: 999px;
+    background-color: var(--bg-lighter10);
+    border-radius: 50px;
 
     &:hover {
-      background-color: var(--bg-darker8);
+      background-color: var(--bg-lighter20);
     }
   }
 
