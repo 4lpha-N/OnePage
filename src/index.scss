@@ -1,4 +1,5 @@
 @use 'sass:color';
+@use 'sass:map';
 
 // Farbpalette als SCSS-Variablen
 $bg-dark: #222;
@@ -15,6 +16,39 @@ $primary-active: color.adjust($primary, $lightness: -20%);
 $primary-focus: color.adjust($primary, $lightness: 10%);
 $primary-disabled: color.mix($primary, $bg-light, 60%);
 $primary-contrast: #fff;
+
+$bg-dark-dark-scale: ();
+@for $i from 1 through 10 {
+  $bg-dark-dark-scale: map.set(
+    $bg-dark-dark-scale,
+    $i,
+    color.adjust($bg-dark, $lightness: -$i * 1%)
+  );
+}
+$bg-dark-light-scale: ();
+@for $i from 1 through 10 {
+  $bg-dark-light-scale: map.set(
+    $bg-dark-light-scale,
+    $i,
+    color.adjust($bg-dark, $lightness: $i * 1%)
+  );
+}
+$bg-light-dark-scale: ();
+@for $i from 1 through 10 {
+  $bg-light-dark-scale: map.set(
+    $bg-light-dark-scale,
+    $i,
+    color.adjust($bg-light, $lightness: -$i * 1%)
+  );
+}
+$bg-light-light-scale: ();
+@for $i from 1 through 10 {
+  $bg-light-light-scale: map.set(
+    $bg-light-light-scale,
+    $i,
+    color.adjust($bg-light, $lightness: $i * 1%)
+  );
+}
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -35,6 +69,19 @@ $primary-contrast: #fff;
   --primary-focus: #{$primary-focus};
   --primary-disabled: #{$primary-disabled};
   --primary-contrast: #{$primary-contrast};
+
+  @for $i from 1 through 10 {
+    --bg-dark-dark#{$i}: #{map.get($bg-dark-dark-scale, $i)};
+  }
+  @for $i from 1 through 10 {
+    --bg-dark-light#{$i}: #{map.get($bg-dark-light-scale, $i)};
+  }
+  @for $i from 1 through 10 {
+    --bg-light-dark#{$i}: #{map.get($bg-light-dark-scale, $i)};
+  }
+  @for $i from 1 through 10 {
+    --bg-light-light#{$i}: #{map.get($bg-light-light-scale, $i)};
+  }
 
   --bg: var(--bg-light);
   --bg-lighter: var(--bg-light-light);
@@ -77,6 +124,12 @@ body:not(.mounted) {
   --bg-lighter: var(--bg-light-light);
   --bg-darker: var(--bg-light-dark);
   --color: var(--color-dark);
+  @for $i from 1 through 10 {
+    --bg-darker#{$i}: var(--bg-light-dark#{$i});
+  }
+  @for $i from 1 through 10 {
+    --bg-lighter#{$i}: var(--bg-light-light#{$i});
+  }
 }
 
 // Theme dark
@@ -85,6 +138,12 @@ body:not(.mounted) {
   --bg-lighter: var(--bg-dark-light);
   --bg-darker: var(--bg-dark-dark);
   --color: var(--color-light);
+  @for $i from 1 through 10 {
+    --bg-darker#{$i}: var(--bg-dark-dark#{$i});
+  }
+  @for $i from 1 through 10 {
+    --bg-lighter#{$i}: var(--bg-dark-light#{$i});
+  }
 }
 
 // Automatisches Dark Theme via OS
@@ -94,5 +153,11 @@ body:not(.mounted) {
     --bg-lighter: var(--bg-dark-light);
     --bg-darker: var(--bg-dark-dark);
     --color: var(--color-light);
+    @for $i from 1 through 10 {
+      --bg-darker#{$i}: var(--bg-dark-dark#{$i});
+    }
+    @for $i from 1 through 10 {
+      --bg-lighter#{$i}: var(--bg-dark-light#{$i});
+    }
   }
 }

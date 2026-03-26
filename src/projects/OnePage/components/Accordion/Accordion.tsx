@@ -44,15 +44,31 @@ export default function Accordion({ children, initialOpen }: AccordionProps) {
           className="onepage-accordion"
           expanded={expanded === index + 1}
           onChange={() => handleChange(index + 1)}
+          sx={(theme) => ({
+            backgroundColor: 'var(--bg-lighter2)',
+            transition: `${theme.transitions.create('margin')}, var(--transition)`,
+            '& .MuiCollapse-root': {
+              transition: `${theme.transitions.create('height')}, var(--transition)`,
+            },
+            '& .MuiAccordionSummary-root': {
+              transition: `${theme.transitions.create('min-height')}, var(--transition)`,
+            },
+            '& .MuiAccordionSummary-expandIconWrapper': {
+              transition: theme.transitions.create('transform'),
+            },
+          })}
         >
           <MuiAccordionSummary
             id={`accordion-summary-${index}`}
             aria-controls={`accordion-details-${index}`}
             expandIcon={<ExpandMoreIcon />}
+            sx={{ padding: '0 16px 0 24px' }}
           >
             <Typography variant="subtitle1">{item.props.title}</Typography> {/* h6 */}
           </MuiAccordionSummary>
-          <MuiAccordionDetails>{item.props.children}</MuiAccordionDetails>
+          <MuiAccordionDetails sx={{ padding: '8px 16px 16px 24px' }}>
+            {item.props.children}
+          </MuiAccordionDetails>
         </MuiAccordion>
       ))}
     </Box>

@@ -103,30 +103,31 @@
   transform: scale(0);
   opacity: 0;
   transition:
-    var(--transition),
     transform 300ms cubic-bezier(0.4, 0, 0.2, 1),
     opacity 300ms cubic-bezier(0.4, 0, 0.2, 1),
     background-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
     box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1),
-    border-color 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    border-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+    var(--transition);
 
   color: var(--color);
   font-size: 1.4rem;
   line-height: 1;
-  background-color: color-mix(in srgb, var(--bg-lighter) 25%, transparent);
-  border: 1px solid color-mix(in srgb, var(--bg-darker) 75%, transparent);
+  background-color: var(--bg-lighter2);
+  border: 1px solid var(--bg-darker8);
   border-radius: 10px;
   cursor: pointer;
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 
   &:hover {
-    background-color: color-mix(in srgb, var(--bg-lighter) 45%, transparent);
-    box-shadow: 0 2px 12px color-mix(in srgb, var(--bg-darker) 50%, transparent);
+    background-color: var(--bg-lighter4);
+    box-shadow: 0 2px 12px var(--bg-darker5);
+    border-color: var(--bg-darker4);
   }
 
   &:active {
-    background-color: color-mix(in srgb, var(--bg-lighter) 65%, transparent);
+    background-color: var(--bg-lighter6);
     // transform: scale(0.94);
   }
 
@@ -142,23 +143,18 @@
   // Seiten im Überblick anklickbar machen
   .onepage-page {
     cursor: pointer;
-    transition:
-      var(--transition),
-      filter 0.15s ease,
-      outline 0.15s ease;
-    outline: 2px solid color-mix(in srgb, var(--color) 10%, transparent);
-    outline-offset: -2px;
+    transition: outline 0.3s ease;
+    outline: 2px solid var(--bg-lighter5);
+    outline-offset: -2px, var(--transition);
 
     &:hover {
-      filter: brightness(0.93) saturate(1.1);
-      outline-color: color-mix(in srgb, var(--color) 70%, transparent);
+      outline-color: var(--color);
     }
 
     &.onepage-page--focused {
-      outline-color: color-mix(in srgb, var(--color) 90%, transparent);
+      outline-color: var(--color);
       outline-width: 3px;
       filter: brightness(0.9) saturate(1.2);
-      box-shadow: 0 0 0 4px color-mix(in srgb, var(--color) 25%, transparent);
     }
   }
 
