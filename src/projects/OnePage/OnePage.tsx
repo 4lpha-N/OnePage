@@ -383,7 +383,9 @@ export default function OnePage() {
               >
                 {/* ── Seiteninhalt – hier anpassen ──── */}
                 <Box className={'onepage-content' + (navEnabled ? '' : ' no-nav')}>
-                  <page.component />
+                  <div className="onepage-content-scroll">
+                    <page.component />
+                  </div>
                 </Box>
               </Box>
             ))}
