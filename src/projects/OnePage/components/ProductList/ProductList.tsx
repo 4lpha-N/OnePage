@@ -63,18 +63,6 @@ export const exampleProducts = [
     price: 59.99,
     imageUrl: 'https://dummyimage.com/640x360/dc143c/fff',
   },
-  {
-    id: 8,
-    name: '8',
-    price: 59.99,
-    imageUrl: 'https://dummyimage.com/640x360/dc143c/fff',
-  },
-  {
-    id: 9,
-    name: '9',
-    price: 59.99,
-    imageUrl: 'https://dummyimage.com/640x360/dc143c/fff',
-  },
 ];
 
 interface ProductListProps {
