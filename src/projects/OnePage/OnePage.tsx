@@ -39,7 +39,7 @@ import { SnackbarProvider, enqueueSnackbar } from 'notistack';
 
 function HomeContent() {
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" sx={{ paddingBottom: '32px' }}>
       <Grid container spacing={4}>
         <Grid size={{ xs: 12 }} display={'flex'} justifyContent={'center'} alignItems={'center'}>
           <Typography variant="h4">- 1 -</Typography>
@@ -87,7 +87,7 @@ function HomeContent() {
 
 function DefaultContent({ label }: { label: string }) {
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" sx={{ paddingBottom: '32px' }}>
       <Grid container spacing={4}>
         <Grid size={{ xs: 12 }} display={'flex'} justifyContent={'center'} alignItems={'center'}>
           <Typography variant="h4">{label}</Typography>

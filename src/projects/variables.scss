@@ -1,7 +1,7 @@
 // ── Variablen ─────────────────────────────────────────
 $headerHeight: 70px;
 $pagePadding: 8px;
-$buttonSpacer: 50px;  // SCSS-Fallback; responsiver Wert via --button-spacer
+$buttonSpacer: 50px; // SCSS-Fallback; responsiver Wert via --button-spacer
 $buttonGap: 4px;
 $contentPadding: $pagePadding + $buttonSpacer + 16px; // statischer Fallback
 $zIndexContent: 1;

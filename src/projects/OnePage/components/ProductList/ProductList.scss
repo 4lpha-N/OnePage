@@ -6,7 +6,6 @@
   inset: 0;
   z-index: 10;
   overflow-y: auto;
-  background-color: var(--bg-lighter2);
   padding: calc(#{$pagePadding} + var(--button-spacer) + 16px);
   padding-top: calc(#{$pagePadding} + var(--button-spacer) + 32px + #{$headerHeight});
   background: var(--bg);

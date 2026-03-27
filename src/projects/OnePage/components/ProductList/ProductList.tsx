@@ -110,7 +110,7 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
       ref={containerCallbackRef}
       maxWidth="xl"
       className="product-list"
-      sx={{ position: 'relative' }}
+      sx={{ position: 'relative', paddingBottom: '32px' }}
     >
       <Grid container spacing={4} className="product-grid" inert={selectedId !== null}>
         {products.map((product) => (
@@ -195,7 +195,7 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
                   >
                     <Box className="product-detail">
                       {/* sx={{ background: 'var(--bg-lighter2)' }} */}
-                      <Container maxWidth="xl">
+                      <Container maxWidth="xl" sx={{ paddingBottom: '32px' }}>
                         <Box className="product-detail__head">
                           <IconButton
                             onClick={handleClose}
