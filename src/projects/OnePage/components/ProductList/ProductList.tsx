@@ -128,6 +128,9 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
                   sx={{
                     backgroundColor: 'var(--bg-lighter2)',
                     boxShadow: 'none',
+                    transition:
+                      'box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, var(--transition)',
+                    backgroundImage: 'none',
                   }}
                 >
                   <CardActionArea disabled>
