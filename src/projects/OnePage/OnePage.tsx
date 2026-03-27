@@ -12,6 +12,7 @@ import Tabs from './components/Tabs/Tabs';
 import Modal from './components/Modal/Modal';
 import Pagination from './components/Pagination/Pagination';
 import Accordion, { AccordionItem } from './components/Accordion/Accordion';
+import ProductList, { exampleProducts } from './components/ProductList/ProductList';
 import {
   GoArrowUpLeft,
   GoArrowUp,
@@ -103,7 +104,7 @@ const PAGES: PageDef[] = [
     row: 0,
     col: 0,
     bg: '#fce4ec',
-    component: () => <DefaultContent label="2" />,
+    component: () => <ProductList products={exampleProducts} />,
   },
   {
     id: 3,

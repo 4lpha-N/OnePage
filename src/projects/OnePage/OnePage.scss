@@ -1,4 +1,5 @@
 @use '../variables.scss' as *;
+@use '../mixins.scss' as *;
 // ─────────────────────────────────────────────────────────────
 // OnePage – One-Page-Website Template
 // Raster: 3 × 3 Seiten, Seite 1 im Zentrum
@@ -77,37 +78,7 @@
   overflow: auto;
   scrollbar-gutter: stable; // reserviert dauerhaft Platz für die Scrollbar → kein Layout-Shift
 
-  // ── Scrollbar – Firefox ───────────────────────────────
-  // scrollbar-color nur für Firefox: Chrome 121+ ignoriert sonst
-  // die ::-webkit-scrollbar-* Pseudo-Elemente inkl. :hover vollständig
-  @supports not selector(::-webkit-scrollbar) {
-    scrollbar-width: thin;
-    scrollbar-color: var(--color) var(--bg-lighter5);
-  }
-
-  // ── Scrollbar – WebKit (Chrome, Safari, Edge) ─────────
-  &::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: var(--bg-lighter2);
-    border-radius: 50px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--bg-lighter10);
-    border-radius: 50px;
-
-    &:hover {
-      background-color: var(--bg-lighter20);
-    }
-  }
-
-  &::-webkit-scrollbar-corner {
-    background: transparent;
-  }
+  @include scrollbar;
 }
 
 // ── Navigations-Overlay ──────────────────────────────────────
